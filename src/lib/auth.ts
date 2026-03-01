@@ -1,6 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import { compare } from "bcrypt-ts";
 import { createServiceClient } from "@/lib/supabase";
 
 export const authOptions: NextAuthOptions = {
@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
                     throw new Error("관리자 계정을 찾을 수 없습니다.");
                 }
 
-                const isValidPassword = await bcrypt.compare(credentials.password, admin.password_hash);
+                const isValidPassword = await compare(credentials.password, admin.password_hash);
 
                 if (!isValidPassword) {
                     throw new Error("비밀번호가 일치하지 않습니다.");

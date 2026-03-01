@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 export const runtime = 'edge';
-import bcrypt from 'bcryptjs';
+import { hash } from 'bcrypt-ts';
 import { createServerSideClient } from '@/lib/supabase';
 import { authOptions } from '@/lib/auth';
 
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         }
 
         const email = session.user.email;
-        const password_hash = await bcrypt.hash(newPassword, 10);
+        const password_hash = await hash(newPassword, 10);
 
         const supabase = await createServerSideClient();
         const { error } = await supabase
