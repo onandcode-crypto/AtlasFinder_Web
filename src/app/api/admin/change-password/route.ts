@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+export const runtime = 'edge';
 import bcrypt from 'bcryptjs';
 import { createServerSideClient } from '@/lib/supabase';
 import { authOptions } from '@/lib/auth';
