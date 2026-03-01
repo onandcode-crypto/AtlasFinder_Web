@@ -1,11 +1,11 @@
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcrypt-ts";
 import { createServiceClient } from "@/lib/supabase";
 
-export const authOptions: NextAuthOptions = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
     providers: [
-        CredentialsProvider({
+        Credentials({
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "admin@atlasfinder.kr" },
@@ -20,14 +20,14 @@ export const authOptions: NextAuthOptions = {
                 const { data: admin, error } = await supabase
                     .from("admins")
                     .select("*")
-                    .eq("email", credentials.email)
+                    .eq("email", credentials.email as string)
                     .single();
 
                 if (error || !admin) {
                     throw new Error("관리자 계정을 찾을 수 없습니다.");
                 }
 
-                const isValidPassword = await compare(credentials.password, admin.password_hash);
+                const isValidPassword = await compare(credentials.password as string, admin.password_hash);
 
                 if (!isValidPassword) {
                     throw new Error("비밀번호가 일치하지 않습니다.");
@@ -42,6 +42,16 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
+        authorized({ auth, request: { nextUrl } }) {
+            const isLoggedIn = !!auth?.user;
+            const isOnDashboard = nextUrl.pathname.startsWith('/admin/dashboard');
+
+            if (isOnDashboard) {
+                if (isLoggedIn) return true;
+                return false; // Redirect unauthenticated users to login page
+            }
+            return true;
+        },
         async jwt({ token, user }: any) {
             if (user) {
                 token.id = user.id;
@@ -65,4 +75,5 @@ export const authOptions: NextAuthOptions = {
         maxAge: 24 * 60 * 60, // 1일
     },
     secret: process.env.NEXTAUTH_SECRET,
-};
+    trustHost: true,
+});

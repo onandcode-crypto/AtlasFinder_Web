@@ -1,12 +1,9 @@
-import { withAuth } from "next-auth/middleware";
+import { auth } from "@/lib/auth";
 
-export default withAuth({
-    callbacks: {
-        authorized: ({ token }) => !!token,
-    },
-    pages: {
-        signIn: "/admin/login",
-    },
+export default auth((req) => {
+    // req.auth holds the session data
+    // Auth.js v5 handles redirect to pages.signIn automatically when returning Response.redirect,
+    // or through the authorized callback in auth.ts
 });
 
 export const config = {
