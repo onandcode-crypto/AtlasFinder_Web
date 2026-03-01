@@ -25,7 +25,7 @@ export default function Home() {
               애플리케이션 보기
             </Button>
             <Button variant="secondary" href="/photo" className="w-full sm:w-56 text-lg px-8 py-4">
-              촬영 알아보기
+              촬영 알아보기(준비중)
             </Button>
           </div>
         </div>
@@ -41,7 +41,6 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
             {/* App Card */}
             <div className="group relative bg-deep-ivory rounded-2xl p-8 sm:p-12 overflow-hidden hover:shadow-xl transition-all duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-coral/5 rounded-bl-[100px] group-hover:bg-coral/10 transition-colors duration-300" />
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm">
                   <svg className="w-8 h-8 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -50,7 +49,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold text-charcoal mb-4">애플리케이션 개발</h3>
                 <p className="text-charcoal/70 mb-8 max-w-sm line-clamp-2 title-font leading-relaxed">
-                  모든 실무자의 업무 효율을 비약적으로 높여주는 강력하고 직관적인 도구들을 만듭니다.
+                  회사에서 일하는 실무자들의 업무 효율을 비약적으로 높여주는 강력하고 직관적인 도구들을 만듭니다.
                 </p>
                 <Button href="/applications" variant="secondary" className="group-hover:bg-charcoal group-hover:text-white transition-colors">
                   자세히 보기 &rarr;
@@ -60,7 +59,6 @@ export default function Home() {
 
             {/* Photo Card */}
             <div className="group relative bg-deep-ivory rounded-2xl p-8 sm:p-12 overflow-hidden hover:shadow-xl transition-all duration-300">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-coral/5 rounded-bl-[100px] group-hover:bg-coral/10 transition-colors duration-300" />
               <div className="relative z-10">
                 <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm">
                   <svg className="w-8 h-8 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -68,7 +66,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-charcoal mb-4">촬영 서비스</h3>
+                <h3 className="text-2xl sm:text-3xl font-bold text-charcoal mb-4">촬영 서비스(준비중)</h3>
                 <p className="text-charcoal/70 mb-8 max-w-sm line-clamp-2 title-font leading-relaxed">
                   가장 아름다운 순간을 영원히 기억될 수 있도록, 최고의 퀄리티로 프레임에 담아냅니다.
                 </p>

@@ -29,7 +29,7 @@ export default function PhotoPage() {
             {/* Page Header */}
             <section className="pt-32 pb-20 px-6 lg:px-8 max-w-7xl mx-auto text-center">
                 <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-charcoal mb-6 tracking-tight">
-                    촬영 서비스
+                    촬영 서비스(준비중)
                 </h1>
                 <div className="h-1 w-20 bg-coral mx-auto mb-8" />
                 <p className="text-xl sm:text-2xl text-charcoal/70 font-medium">
