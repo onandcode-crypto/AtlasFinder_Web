@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="scroll-smooth">
-      <body className="antialiased selection:bg-coral/20 selection:text-charcoal bg-ivory text-charcoal min-h-screen flex flex-col font-sans">
+      <body className="antialiased select-none selection:bg-coral/20 selection:text-charcoal bg-ivory text-charcoal min-h-screen flex flex-col font-sans">
         {children}
       </body>
     </html>

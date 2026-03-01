@@ -25,8 +25,7 @@ export function Navigation() {
                         </Link>
                     </div>
 
-                    {/* Desktop Menu */}
-                    <div className="hidden md:flex flex-1 justify-center space-x-12">
+                    <div className="hidden md:flex flex-1 justify-center space-x-12 absolute left-1/2 -translate-x-1/2">
                         {navItems.map((item) => {
                             const isActive = pathname === item.path || (pathname.startsWith(item.path) && item.path !== '/');
                             return (
@@ -45,7 +44,24 @@ export function Navigation() {
                         })}
                     </div>
 
-                    <div className="hidden md:block w-32 flex-shrink-0"></div>
+                    {/* Right Menu (Desktop) */}
+                    <div className="hidden md:flex flex-shrink-0 justify-end items-center pl-8 ml-auto">
+                        <div className="flex items-center border border-mid-gray/20 rounded-full bg-white shadow-sm text-[13px] font-bold text-charcoal transition-colors hover:border-coral/40">
+
+                            <div className="relative group">
+                                <Link href="/support" className="block px-4 py-1.5 hover:text-coral transition-colors rounded-l-full">
+                                    Support
+                                </Link>
+                            </div>
+
+                            <div className="w-[1px] h-3.5 bg-mid-gray/30"></div>
+
+                            <Link href="/contact" className="block px-4 py-1.5 hover:text-coral transition-colors rounded-r-full">
+                                Contact
+                            </Link>
+
+                        </div>
+                    </div>
 
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center">

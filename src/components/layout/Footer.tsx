@@ -11,9 +11,9 @@ export function Footer() {
                         <Link href="/" className="text-xl font-extrabold tracking-tight text-charcoal mb-4">
                             AtlasFinder
                         </Link>
-                        <p className="text-[13px] text-mid-gray">
+                        <Link href="/admin/login" className="text-[13px] text-mid-gray hover:text-charcoal transition-colors">
                             © 2026 AtlasFinder. All rights reserved.
-                        </p>
+                        </Link>
                     </div>
 
                     <div className="flex flex-col items-center md:items-end gap-3">

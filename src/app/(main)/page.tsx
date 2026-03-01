@@ -14,11 +14,11 @@ export default function Home() {
             ATLASFINDER
           </h1>
           <p className="text-2xl sm:text-3xl font-medium text-charcoal mb-4">
-            효율을 만들고, 순간을 기록합니다.
+            나다운 내일을 찾아가는 항해 지도
           </p>
           <p className="text-base sm:text-lg text-charcoal/80 mb-10 leading-relaxed max-w-xl font-medium">
-            업무의 흐름을 돕는 애플리케이션부터 당신의 가장 빛나는 순간을 담는 포트폴리오까지,
-            최고의 퀄리티로 제공합니다.
+            흩어진 생각과 가능성을 모아 우리 삶의 방향을 하나씩 짚어봅니다.<br />
+            어디로 가야 할지 막막할 때, 우리의 항해를 돕는 공간입니다.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
             <Button href="/applications" className="w-full sm:w-56 text-lg px-8 py-4">
@@ -48,8 +48,12 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold text-charcoal mb-4">애플리케이션 개발</h3>
-                <p className="text-charcoal/70 mb-8 max-w-sm line-clamp-2 title-font leading-relaxed">
-                  회사에서 일하는 실무자들의 업무 효율을 비약적으로 높여주는 강력하고 직관적인 도구들을 만듭니다.
+                <p className="text-[15px] sm:text-base text-charcoal/70 mb-8 leading-relaxed font-medium">
+                  회사에서 일하는 여러분이 복잡한 고민 대신 본질적인 일에 집중하도록 돕는,<br className="hidden sm:block" />
+                  강력하고도 직관적인 방향 탐색 도구를 만듭니다.<br className="hidden sm:block" /><br className="hidden sm:block" />
+
+                  AtlasFinder는 각자의 일과 삶에서 길을 잃지 않도록<br className="hidden sm:block" />
+                  다음 선택을 더 명확하게 보여주는 실무자의 개인 나침반입니다.
                 </p>
                 <Button href="/applications" variant="secondary" className="group-hover:bg-charcoal group-hover:text-white transition-colors">
                   자세히 보기 &rarr;
@@ -67,8 +71,13 @@ export default function Home() {
                   </svg>
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold text-charcoal mb-4">촬영 서비스(준비중)</h3>
-                <p className="text-charcoal/70 mb-8 max-w-sm line-clamp-2 title-font leading-relaxed">
-                  가장 아름다운 순간을 영원히 기억될 수 있도록, 최고의 퀄리티로 프레임에 담아냅니다.
+                <p className="text-[15px] sm:text-base text-charcoal/70 mb-8 leading-relaxed font-medium">
+                  AtlasFinder의 촬영 서비스는 사람과 제품, 공간을 두루 담으며<br className="hidden sm:block" />
+                  당신이 어떤 길을 걷고 있는지 자연스럽게 담아냅니다.<br className="hidden sm:block" /><br className="hidden sm:block" />
+
+                  브랜딩 사진부터 제품 촬영, 작업 현장까지<br className="hidden sm:block" />
+                  일과 삶의 방향이 스며 있는 장면을<br className="hidden sm:block" />
+                  차분한 리듬으로 깊이 있게 기록해 드립니다.
                 </p>
                 <Button href="/photo" variant="secondary" className="group-hover:bg-charcoal group-hover:text-white transition-colors">
                   자세히 보기 &rarr;
@@ -100,28 +109,28 @@ export default function Home() {
               </h2>
               <div className="h-1 w-20 bg-coral mb-8" />
 
-              <p className="text-lg text-charcoal/80 mb-12 leading-relaxed font-medium">
-                우리는 문제를 발견하고 해결책을 제시하는 것에 끝없는 열정을 가지고 있습니다.
-                단순한 기능의 구현을 넘어, 사용자에게 최고의 경험과 가치를 전달하기 위해
-                세밀한 디테일까지 고민하며 만들어갑니다.
+              <p className="text-[17px] text-charcoal/80 mb-12 leading-loose font-medium">
+                AtlasFinder는 흩어진 생각과 가능성을 모아 우리 삶의 방향을 하나씩 짚어보는 항해 지도입니다.
+                <br /><br />
+                어디로 가야 할지 막막할 때, AtlasFinder는 우리의 경험과 선택들을 정리해 오늘보다 더 나다운 내일을 찾아가도록 돕는 공간입니다.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-8 w-full">
                 <div>
-                  <h4 className="text-xl font-bold text-charcoal mb-3">본질에의 집중</h4>
-                  <p className="text-charcoal/70 leading-relaxed text-[15px]">군더더기를 덜어내고 가장 핵심이 되는 가치에 집중합니다.</p>
+                  <h4 className="text-xl font-bold text-charcoal mb-3">경험의 기록</h4>
+                  <p className="text-charcoal/70 leading-relaxed text-[15px]">지나온 시간과 선택들을 빠짐없이 모아 우리만의 지도를 그립니다.</p>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-charcoal mb-3">끊임없는 실험</h4>
-                  <p className="text-charcoal/70 leading-relaxed text-[15px]">새로운 방식을 두려워하지 않으며 더 나은 결과를 향해 나아갑니다.</p>
+                  <h4 className="text-xl font-bold text-charcoal mb-3">생각의 정리</h4>
+                  <p className="text-charcoal/70 leading-relaxed text-[15px]">복잡하게 얽힌 고민들을 풀어내어 온전한 우리의 모습을 발견합니다.</p>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-charcoal mb-3">완벽한 기록</h4>
-                  <p className="text-charcoal/70 leading-relaxed text-[15px]">빛나는 찰나의 순간을 영원한 기록으로 남깁니다.</p>
+                  <h4 className="text-xl font-bold text-charcoal mb-3">방향의 탐색</h4>
+                  <p className="text-charcoal/70 leading-relaxed text-[15px]">어디로 가야 할지 막막한 순간, 앞으로 나아갈 길을 비춰줍니다.</p>
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-charcoal mb-3">사용자 중심</h4>
-                  <p className="text-charcoal/70 leading-relaxed text-[15px]">언제나 서비스를 사용하는 사람의 입장에서 경험을 설계합니다.</p>
+                  <h4 className="text-xl font-bold text-charcoal mb-3">내일의 성장</h4>
+                  <p className="text-charcoal/70 leading-relaxed text-[15px]">정리된 과거를 나침반 삼아 더 나다운 내일을 향해 항해합니다.</p>
                 </div>
               </div>
             </div>

@@ -24,23 +24,38 @@ export default function AdminDashboardPage() {
                                 <thead>
                                     <tr className="bg-ivory border-b border-mid-gray/20 text-charcoal/70 text-sm">
                                         <th className="p-4 font-bold">애플리케이션 이름</th>
-                                        <th className="p-4 font-bold">버전</th>
-                                        <th className="p-4 font-bold">상태</th>
-                                        <th className="p-4 font-bold">링크</th>
+                                        <th className="p-4 font-bold text-center">버전</th>
+                                        <th className="p-4 font-bold text-center">상태</th>
+                                        <th className="p-4 font-bold text-center">링크</th>
                                         <th className="p-4 font-bold text-right">관리</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-charcoal text-sm">
-                                    <tr className="border-b border-mid-gray/10 hover:bg-ivory/50 transition-colors">
-                                        <td className="p-4 font-bold">PixelPDF</td>
-                                        <td className="p-4">v2.0</td>
-                                        <td className="p-4"><span className="text-emerald-600 font-bold bg-emerald-50 px-2 py-1 rounded">공개중</span></td>
-                                        <td className="p-4"><a href="#" className="underline hover:text-coral transition-colors">링크보기</a></td>
-                                        <td className="p-4 text-right space-x-2">
-                                            <button className="text-charcoal hover:text-coral transition-colors font-bold">수정</button>
-                                            <button className="text-red-500 hover:text-red-700 transition-colors font-bold">삭제</button>
-                                        </td>
-                                    </tr>
+                                    {[
+                                        { name: 'PixelPDF', version: 'v2.0', status: '공개중' },
+                                        { name: 'Candidate Manager Pro', version: 'v1.0', status: '공개중' },
+                                        { name: 'Candidate Manager', version: 'v2.5', status: '공개중' },
+                                        { name: 'Smart HR Manager Pro', version: 'v1.0', status: '비공개' },
+                                        { name: 'Smart HR Manager', version: 'v1.5', status: '공개중' },
+                                        { name: 'AtlasTool', version: 'v1.0', status: '공개중' },
+                                    ].map((app, idx) => (
+                                        <tr key={idx} className="border-b border-mid-gray/10 hover:bg-ivory/50 transition-colors">
+                                            <td className="p-4 font-bold">{app.name}</td>
+                                            <td className="p-4 text-center">{app.version}</td>
+                                            <td className="p-4 text-center">
+                                                {app.status === '공개중' ? (
+                                                    <span className="text-emerald-600 font-bold bg-emerald-50 px-2 py-1 rounded">공개중</span>
+                                                ) : (
+                                                    <span className="text-amber-600 font-bold bg-amber-50 px-2 py-1 rounded">비공개</span>
+                                                )}
+                                            </td>
+                                            <td className="p-4 text-center"><a href="#" className="underline hover:text-coral transition-colors">링크보기</a></td>
+                                            <td className="p-4 text-right space-x-2">
+                                                <button onClick={() => alert(`[수정 모달 오픈] ${app.name} 앱의 세부 정보 폼을 불러옵니다.`)} className="text-charcoal hover:text-coral transition-colors font-bold">수정</button>
+                                                <button className="text-red-500 hover:text-red-700 transition-colors font-bold">삭제</button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -177,8 +192,8 @@ export default function AdminDashboardPage() {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`w-full text-left px-4 py-3 rounded-xl font-bold transition-all duration-200 ${activeTab === tab.id
-                                    ? 'bg-coral text-white shadow-md'
-                                    : 'text-charcoal/70 hover:bg-mid-gray/5 hover:text-charcoal'
+                                ? 'bg-coral text-white shadow-md'
+                                : 'text-charcoal/70 hover:bg-mid-gray/5 hover:text-charcoal'
                                 }`}
                         >
                             {tab.label}
