@@ -19,6 +19,24 @@ CREATE TABLE public.reservations (
 -- 인덱스
 CREATE INDEX idx_reservations_phone_email ON public.reservations(phone, email);
 
+-- ==========================================
+-- 1.5 관리자 계정 (Admins)
+-- ==========================================
+CREATE TABLE public.admins (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  needs_password_change BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- 마스터 계정 초기 생성 (비밀번호: '0000'의 bcrypt 해시화 값 임시 삽입)
+-- 참고: 실제 Node.js 환경에서 bcrypt.hash('0000', 10) 한 값을 넣어야 합니다.
+-- 여기서는 임시 테스트용 해시를 넣습니다.
+INSERT INTO public.admins (email, password_hash, needs_password_change) 
+VALUES ('iam@atlasfinder.kr', '$2b$10$X87v1tIqL7uH/1G5MOMiA.xR1jYvJ0z8C/M7.4QZ3aO1X0wT.xYmS', true);
+
+
 -- 2. 달력 설정 관리 (Calendar Settings)
 CREATE TABLE public.calendar_settings (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
