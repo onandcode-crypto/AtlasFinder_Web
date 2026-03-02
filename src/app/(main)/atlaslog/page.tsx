@@ -2,6 +2,8 @@ import React from 'react';
 import { createServerSideClient } from '@/lib/supabase';
 import { LogCard } from '@/components/atlaslog/LogCard';
 
+export const runtime = 'edge';
+
 export default async function AtlasLogPage() {
     const supabase = await createServerSideClient();
 

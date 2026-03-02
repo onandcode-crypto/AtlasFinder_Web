@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/Button';
 import toast, { Toaster } from 'react-hot-toast';
 import dynamic from 'next/dynamic';
 
+export const runtime = 'edge';
+
 const RichTextEditor = dynamic(() => import('@/components/ui/RichTextEditor'), {
     ssr: false, // Tiptap needs browser environment
     loading: () => <div className="min-h-[300px] flex justify-center items-center bg-ivory rounded-xl border border-mid-gray/20 text-mid-gray text-sm">에디터 불러오는 중...</div>

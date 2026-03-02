@@ -2,6 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { createServerSideClient } from '@/lib/supabase';
 
+export const runtime = 'edge';
+
 // DB 데이터 타입 정의
 interface SiteAtlasItem {
     id: string;

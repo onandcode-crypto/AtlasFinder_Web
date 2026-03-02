@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerSideClient } from '@/lib/supabase';
+
+export const runtime = 'edge';
 import { auth } from '@/lib/auth';
 
 export async function POST(req: Request) {

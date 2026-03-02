@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
+export const runtime = 'edge';
+
 interface PageProps {
     params: {
         id: string;
