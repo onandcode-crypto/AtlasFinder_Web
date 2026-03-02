@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import "./globals.css";
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: "AtlasFinder",
   description: "업무 효율을 높이는 도구들과 순간을 기록하는 촬영 서비스",

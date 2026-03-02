@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { createServerSideClient } from '@/lib/supabase';
 import { auth } from '@/lib/auth'; // Ensure you have auth configured
 
+export const runtime = 'edge';
+
 export async function GET() {
     try {
         const session = await auth();
