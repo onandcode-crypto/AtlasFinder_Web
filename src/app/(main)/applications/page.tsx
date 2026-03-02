@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/Button";
 import { createServerSideClient } from '@/lib/supabase';
 
 export const revalidate = 0; // Disable static caching to show fresh data
-export const runtime = 'edge';
 
 export default async function ApplicationsPage() {
     const supabase = await createServerSideClient();

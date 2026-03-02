@@ -1,7 +1,6 @@
 import { createServerSideClient } from '@/lib/supabase';
 
 export const revalidate = 0; // Disable static caching so FAQs are always fresh
-export const runtime = 'edge';
 
 export default async function SupportPage() {
     const supabase = await createServerSideClient();
