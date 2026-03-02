@@ -95,7 +95,7 @@ export default function Home() {
             <div className="relative h-[400px] sm:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl order-2 lg:order-1 group">
               <div className="absolute inset-0 bg-charcoal/10 group-hover:bg-transparent transition-colors duration-700 z-10" />
               <Image
-                src="https://images.unsplash.com/photo-1497215848143-2287c2fb2731?q=80&w=2070&auto=format&fit=crop"
+                src="/images/abotus.png"
                 alt="Brand Story"
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
