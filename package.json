@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "build": "next build",
+    "pages:build": "npx @opennextjs/cloudflare build",
     "dev": "next dev",
-    "build": "npx @opennextjs/cloudflare build",
-    "start": "next start",
-    "lint": "eslint"
+    "start": "next start"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",
