@@ -98,6 +98,7 @@ export default function Home() {
                 src="/images/abotus.png"
                 alt="Brand Story"
                 fill
+                unoptimized
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
             </div>

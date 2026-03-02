@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-export const runtime = 'edge';
 import { hash } from 'bcrypt-ts';
 import { createServerSideClient } from '@/lib/supabase';
 import { auth } from '@/lib/auth';
