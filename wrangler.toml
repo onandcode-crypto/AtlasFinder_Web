@@ -1,7 +1,0 @@
-name = "atlasfinder"
-main = ".open-next/worker.js"
-compatibility_date = "2024-09-23"
-compatibility_flags = ["nodejs_compat"]
-
-# Use the new v2 build system
-build.command = "npm run build"

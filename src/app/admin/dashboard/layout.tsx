@@ -17,6 +17,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const [error, setError] = useState('');
 
     useEffect(() => {
+        console.log('Dashboard Session Status:', status, session); // 디버깅용 로그: 브라우저 콘솔(F12)에서 확인 가능
         if (status === 'unauthenticated') {
             router.push('/admin/login');
         } else if (status === 'authenticated' && session?.user && (session.user as any).needsPasswordChange) {
