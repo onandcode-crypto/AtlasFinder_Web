@@ -1,89 +1,22 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { createServerSideClient } from '@/lib/supabase';
 
-// Mock Data
-const applications = [
-    {
-        id: 1,
-        name: "PixelPDF",
-        version: "v2.0",
-        priceType: "무료",
-        description: "PDF 문서의 용량을 화질 저하 없이 극적으로 압축해주는 경량화 도구입니다. 텍스트 추출 및 병합 기능까지 지원하여 문서 작업 효율을 높입니다.",
-        features: ["혁신적인 압축 알고리즘", "빠른 텍스트 추출", "PDF 병합 및 분할 지원"],
-        os: "Windows 10 / 11",
-        image: "/images/pixelpdf-icon.png",
-        hasAppIcon: true,
-        bgColor: "from-[#F25C54]/10 to-[#1A1A1A]/5",
-        link: "https://github.com/onandcode-crypto/atlasfinder_app_release/releases/download/PixelPDF_v2.0/PixelPDF_v2.0.0_Setup.exe"
-    },
-    {
-        id: 2,
-        name: "Candidate Manager Pro",
-        version: "v1.0",
-        priceType: "₩100,000",
-        description: "업무 생산성을 높이기 위한 다양한 미니 유틸리티를 하나로 모은 종합 툴박스입니다. 필요한 기능을 빠르게 실행하고 단축키로 접근할 수 있습니다.",
-        features: ["클립보드 매니저", "화면 캡쳐 및 주석", "커스텀 단축키 매핑"],
-        os: "Windows 10 / 11",
-        image: "/images/candidate_manager.png",
-        hasAppIcon: true,
-        bgColor: "from-[#F25C54]/10 to-[#1A1A1A]/5",
-        link: "https://example.com/download/atlastool"
-    },
-    {
-        id: 2,
-        name: "Candidate Manager",
-        version: "v2.5",
-        priceType: "₩50,000",
-        description: "업무 생산성을 높이기 위한 다양한 미니 유틸리티를 하나로 모은 종합 툴박스입니다. 필요한 기능을 빠르게 실행하고 단축키로 접근할 수 있습니다.",
-        features: ["클립보드 매니저", "화면 캡쳐 및 주석", "커스텀 단축키 매핑"],
-        os: "Windows 10 / 11",
-        image: "/images/candidate_manager.png",
-        hasAppIcon: true,
-        bgColor: "from-[#F25C54]/10 to-[#1A1A1A]/5",
-        link: "https://example.com/download/atlastool"
-    },
-    {
-        id: 2,
-        name: "Smart HR Manager Pro",
-        version: "v1.0",
-        priceType: "₩100,000",
-        description: "업무 생산성을 높이기 위한 다양한 미니 유틸리티를 하나로 모은 종합 툴박스입니다. 필요한 기능을 빠르게 실행하고 단축키로 접근할 수 있습니다.",
-        features: ["클립보드 매니저", "화면 캡쳐 및 주석", "커스텀 단축키 매핑"],
-        os: "Windows 10 / 11",
-        image: "/images/smart_hr_manager.png",
-        hasAppIcon: true,
-        bgColor: "from-[#F25C54]/10 to-[#1A1A1A]/5",
-        link: "https://example.com/download/atlastool"
-    },
-    {
-        id: 2,
-        name: "Smart HR Manager",
-        version: "v1.5",
-        priceType: "₩50,000",
-        description: "업무 생산성을 높이기 위한 다양한 미니 유틸리티를 하나로 모은 종합 툴박스입니다. 필요한 기능을 빠르게 실행하고 단축키로 접근할 수 있습니다.",
-        features: ["클립보드 매니저", "화면 캡쳐 및 주석", "커스텀 단축키 매핑"],
-        os: "Windows 10 / 11",
-        image: "/images/smart_hr_manager.png",
-        hasAppIcon: true,
-        bgColor: "from-[#F25C54]/10 to-[#1A1A1A]/5",
-        link: "https://example.com/download/atlastool"
-    },
-    {
-        id: 2,
-        name: "AtlasTool",
-        version: "v1.0",
-        priceType: "₩200,000",
-        description: "업무 생산성을 높이기 위한 다양한 미니 유틸리티를 하나로 모은 종합 툴박스입니다. 필요한 기능을 빠르게 실행하고 단축키로 접근할 수 있습니다.",
-        features: ["클립보드 매니저", "화면 캡쳐 및 주석", "커스텀 단축키 매핑"],
-        os: "Windows 10 / 11",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2000&auto=format&fit=crop",
-        hasAppIcon: false,
-        bgColor: "",
-        link: "https://example.com/download/atlastool"
+export const revalidate = 0; // Disable static caching to show fresh data
+
+export default async function ApplicationsPage() {
+    const supabase = await createServerSideClient();
+
+    // Fetch non-private applications
+    const { data: applications, error } = await supabase
+        .from('applications')
+        .select('*')
+        .neq('status', 'PRIVATE')
+        .order('created_at', { ascending: true });
+
+    if (error) {
+        console.error('Error fetching applications:', error);
     }
-];
-
-export default function ApplicationsPage() {
     return (
         <div className="w-full bg-ivory min-h-screen">
             {/* Page Header */}
@@ -100,31 +33,21 @@ export default function ApplicationsPage() {
             {/* App List */}
             <section className="px-6 lg:px-8 max-w-7xl mx-auto pb-32">
                 <div className="flex flex-col gap-16 lg:gap-24">
-                    {applications.map((app) => (
+                    {applications && applications.length > 0 ? applications.map((app) => (
                         <div key={app.id} className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden border border-mid-gray/10 group">
                             <div className="grid lg:grid-cols-2 gap-0">
                                 {/* Image Area */}
-                                <div className={`relative h-[300px] lg:h-auto w-full overflow-hidden flex items-center justify-center ${app.hasAppIcon ? `bg-gradient-to-br ${app.bgColor}` : 'bg-deep-ivory'
-                                    }`}>
+                                <div className="relative h-[300px] lg:h-auto w-full overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#F25C54]/10 to-[#1A1A1A]/5">
                                     <div className="absolute inset-0 bg-white/40 group-hover:bg-transparent transition-colors duration-500 z-10" />
 
-                                    {app.hasAppIcon ? (
-                                        <div className="relative w-48 h-48 sm:w-64 sm:h-64 z-20 transition-transform duration-700 group-hover:scale-110 drop-shadow-2xl">
-                                            <Image
-                                                src={app.image}
-                                                alt={`${app.name} icon`}
-                                                fill
-                                                className="object-contain"
-                                            />
-                                        </div>
-                                    ) : (
+                                    <div className="relative w-48 h-48 sm:w-64 sm:h-64 z-20 transition-transform duration-700 group-hover:scale-110 drop-shadow-2xl">
                                         <Image
-                                            src={app.image}
-                                            alt={app.name}
+                                            src={app.image_url || '/images/default-app-icon.png'}
+                                            alt={`${app.name} icon`}
                                             fill
-                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                            className="object-contain"
                                         />
-                                    )}
+                                    </div>
                                 </div>
 
                                 {/* Content Area */}
@@ -133,7 +56,7 @@ export default function ApplicationsPage() {
                                         <h2 className="text-3xl font-bold text-charcoal tracking-tight">{app.name}</h2>
                                         <div className="flex items-center gap-3">
                                             <span className="text-sm font-medium text-mid-gray bg-ivory px-3 py-1 rounded-full">{app.version}</span>
-                                            <span className="text-sm font-bold text-coral bg-coral/10 px-3 py-1 rounded-full">{app.priceType}</span>
+                                            <span className="text-sm font-bold text-coral bg-coral/10 px-3 py-1 rounded-full">{app.price_type}</span>
                                         </div>
                                     </div>
 
@@ -143,7 +66,7 @@ export default function ApplicationsPage() {
 
                                     <div className="mb-10">
                                         <ul className="space-y-3">
-                                            {app.features.map((feature, idx) => (
+                                            {(app.features || []).map((feature: string, idx: number) => (
                                                 <li key={idx} className="flex items-center text-charcoal/70">
                                                     <svg className="w-5 h-5 text-coral mr-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -161,19 +84,33 @@ export default function ApplicationsPage() {
                                             </svg>
                                             {app.os}
                                         </span>
-                                        <Button
-                                            href={app.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-sm px-6 py-3"
-                                        >
-                                            다운로드 &rarr;
-                                        </Button>
+                                        {app.status === "COMING_SOON" ? (
+                                            <Button
+                                                variant="secondary"
+                                                disabled
+                                                className="text-sm px-6 py-3 cursor-not-allowed opacity-70"
+                                            >
+                                                준비중
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                href={app.link_url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-sm px-6 py-3"
+                                            >
+                                                다운로드 &rarr;
+                                            </Button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : (
+                        <div className="text-center py-20 text-charcoal/60">
+                            준비 중인 애플리케이션이 없습니다.
+                        </div>
+                    )}
                 </div>
             </section>
         </div>

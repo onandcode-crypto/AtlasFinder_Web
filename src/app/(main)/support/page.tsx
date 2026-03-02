@@ -1,6 +1,19 @@
-'use client';
+import { createServerSideClient } from '@/lib/supabase';
 
-export default function SupportPage() {
+export const revalidate = 0; // Disable static caching so FAQs are always fresh
+
+export default async function SupportPage() {
+    const supabase = await createServerSideClient();
+    const { data: faqs, error } = await supabase
+        .from('faqs')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
+
+    if (error) {
+        console.error('Error fetching FAQs:', error);
+    }
+
     return (
         <div className="w-full bg-ivory min-h-screen pb-32">
             {/* Page Header */}
@@ -20,24 +33,20 @@ export default function SupportPage() {
                     <h2 className="text-2xl font-bold text-charcoal mb-8">자주 묻는 질문 (FAQ)</h2>
 
                     <div className="space-y-6">
-                        <div className="border-b border-mid-gray/10 pb-6">
-                            <h3 className="text-lg font-bold text-charcoal mb-2">Q. 애플리케이션 라이선스와 기기 대수가 어떻게 되나요?</h3>
-                            <p className="text-charcoal/70 leading-relaxed text-[15px]">
-                                기본 제공되는 라이선스는 1계정 당 1대의 PC 환경에서 인증 및 사용을 권장하고 있습니다. 기업체 대량 구매나 추가 인증 절차 등 도움이 필요하신 경우 Contact 메일로 문의 남겨주시기 바랍니다.
-                            </p>
-                        </div>
-                        <div className="border-b border-mid-gray/10 pb-6">
-                            <h3 className="text-lg font-bold text-charcoal mb-2">Q. 촬영 서비스 예약은 최소 며칠 전에 해야 하나요?</h3>
-                            <p className="text-charcoal/70 leading-relaxed text-[15px]">
-                                원활한 스케줄 및 컨셉 조율을 위해 원하시는 촬영일 기준 최소 2주~한달 전 접수를 권장하고 있습니다. '대기중' 상태에서 담당자가 연락을 드린 후 스케줄이 조율되며, 이후 상태가 확정 처리됩니다.
-                            </p>
-                        </div>
-                        <div className="pb-2">
-                            <h3 className="text-lg font-bold text-charcoal mb-2">Q. 결제 후 환불 규정이나 교환 절차는 어떻게 되나요?</h3>
-                            <p className="text-charcoal/70 leading-relaxed text-[15px]">
-                                디지털 소프트웨어 상품은 설치 또는 다운로드 후에는 취소가 불가합니다. 부득이하게 라이선스 오류나 심각한 프로그램 에러 발생 시에는 상세 내역을 접수해주시면 확인 후 환불 및 재발급 기준에 맞춰 처리해 드립니다.
-                            </p>
-                        </div>
+                        {faqs && faqs.length > 0 ? (
+                            faqs.map((faq, index) => (
+                                <div key={faq.id} className={index !== faqs.length - 1 ? "border-b border-mid-gray/10 pb-6" : "pb-2"}>
+                                    <h3 className="text-lg font-bold text-charcoal mb-2">Q. {faq.question}</h3>
+                                    <p className="text-charcoal/70 leading-relaxed text-[15px] whitespace-pre-wrap">
+                                        {faq.answer}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="py-8 text-center text-charcoal/50">
+                                등록된 자주 묻는 질문이 없습니다.
+                            </div>
+                        )}
                     </div>
 
                     {/* Email Inquiry Section */}

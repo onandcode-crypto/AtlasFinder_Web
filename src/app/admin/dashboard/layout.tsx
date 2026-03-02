@@ -63,49 +63,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return (
         <div className="min-h-screen bg-ivory flex">
-            {/* Sidebar Navigation */}
-            <aside className="w-64 bg-white border-r border-mid-gray/10 hidden md:block">
-                <div className="p-6 h-full flex flex-col">
-                    <div className="mb-10 pt-4">
-                        <h2 className="text-xl font-bold text-charcoal">관리자 대시보드</h2>
-                        <p className="text-sm text-charcoal/60 mt-1">{session?.user?.email}</p>
-                    </div>
-                    <nav className="flex-1 space-y-2">
-                        {[
-                            { label: '예약 현황', path: '/admin/dashboard' },
-                            { label: '애플리케이션 관리', path: '/admin/dashboard/applications' },
-                            { label: '갤러리 관리', path: '/admin/dashboard/gallery' },
-                        ].map((item) => {
-                            const isActive = pathname === item.path;
-                            return (
-                                <button
-                                    key={item.path}
-                                    onClick={() => router.push(item.path)}
-                                    className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${isActive ? 'bg-coral/10 text-coral' : 'text-charcoal/70 hover:bg-mid-gray/5'
-                                        }`}
-                                >
-                                    {item.label}
-                                </button>
-                            );
-                        })}
-                    </nav>
-                    <div className="pt-6 border-t border-mid-gray/10 space-y-2">
-                        <button
-                            onClick={() => setIsPasswordModalOpen(true)}
-                            className="w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-charcoal/70 hover:bg-mid-gray/5 transition-colors"
-                        >
-                            비밀번호 변경
-                        </button>
-                        <button
-                            onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                            className="w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-coral hover:bg-coral/5 transition-colors"
-                        >
-                            로그아웃
-                        </button>
-                    </div>
-                </div>
-            </aside>
-
             {/* Main Content Area */}
             <main className="flex-1 overflow-x-hidden overflow-y-auto">
                 {/* Mobile Header */}

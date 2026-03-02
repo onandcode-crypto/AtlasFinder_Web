@@ -17,13 +17,15 @@ export function Footer() {
                     </div>
 
                     <div className="flex flex-col items-center md:items-end gap-3">
-                        <p className="text-[13px] text-charcoal">contact@atlasfinder.kr</p>
-                        <div className="flex gap-3 mt-2">
-                            {/* SNS Placeholders */}
-                            <a href="#" className="w-9 h-9 border border-mid-gray/30 rounded-full flex items-center justify-center text-[11px] font-medium text-charcoal hover:bg-coral hover:text-white hover:border-coral transition-colors">IN</a>
-                            <a href="#" className="w-9 h-9 border border-mid-gray/30 rounded-full flex items-center justify-center text-[11px] font-medium text-charcoal hover:bg-coral hover:text-white hover:border-coral transition-colors">FB</a>
-                            <a href="#" className="w-9 h-9 border border-mid-gray/30 rounded-full flex items-center justify-center text-[11px] font-medium text-charcoal hover:bg-coral hover:text-white hover:border-coral transition-colors">YT</a>
-                        </div>
+                        <Link
+                            href="/site-atlas"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-mid-gray/20 rounded-full shadow-sm text-[13px] font-bold text-charcoal hover:border-coral/50 hover:text-coral transition-all duration-300 group"
+                        >
+                            <span>Site Atlas</span>
+                            <svg className="w-4 h-4 text-mid-gray group-hover:text-coral transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </Link>
                     </div>
 
                 </div>

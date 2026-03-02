@@ -1,18 +1,40 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+interface NavItem {
+    label: string;
+    path: string;
+}
 
 export function Navigation() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
-
-    const navItems = [
+    const [navItems, setNavItems] = useState<NavItem[]>([
         { label: '애플리케이션', path: '/applications' },
         { label: '촬영서비스', path: '/photo' },
         { label: 'About', path: '/#about' },
-    ];
+        { label: 'AtlasLog', path: '/atlaslog' }, // Fallback default
+    ]);
+
+    useEffect(() => {
+        const fetchNavItems = async () => {
+            try {
+                const res = await fetch('/api/navigation');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.length > 0) {
+                        setNavItems(data);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to fetch navigation items:', error);
+            }
+        };
+        fetchNavItems();
+    }, []);
 
     return (
         <nav className="fixed w-full z-50 bg-ivory/90 backdrop-blur-md border-b border-mid-gray/10">
