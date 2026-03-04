@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { createServerSideClient } from '@/lib/supabase';
-import { auth } from '@/lib/auth'; // Ensure you have auth configured
+import { getAdminSession } from '@/lib/auth';
 
 export const runtime = 'edge';
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
-        const session = await auth();
-        if (!session?.user) {
+        const session = await getAdminSession(req);
+        if (!session) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -39,8 +39,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        const session = await auth();
-        if (!session?.user) {
+        const session = await getAdminSession(req);
+        if (!session) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
         const { data: adminData } = await supabase
             .from('admins')
             .select('id')
-            .eq('email', session.user.email)
+            .eq('email', session)
             .single();
 
         if (!adminData) {

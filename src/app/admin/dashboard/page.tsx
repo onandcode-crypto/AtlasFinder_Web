@@ -11,7 +11,6 @@ const RichTextEditor = dynamic(() => import('@/components/ui/RichTextEditor'), {
     loading: () => <div className="min-h-[300px] flex justify-center items-center bg-ivory rounded-xl border border-mid-gray/20 text-mid-gray text-sm">에디터 불러오는 중...</div>
 });
 
-import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 type TabType = 'applications' | 'gallery' | 'reservations' | 'accounts' | 'atlaslog' | 'navigation' | 'faqs' | 'site-atlas';
@@ -47,7 +46,10 @@ interface ApplicationItem {
 }
 
 export default function AdminDashboardPage() {
-    const { data: session } = useSession();
+    const [session, setSession] = useState<{ user: { email: string } } | null>(null);
+    useEffect(() => {
+        fetch('/api/auth/session').then(r => r.json()).then(setSession);
+    }, []);
     const router = useRouter();
     const [activeTab, setActiveTab] = useState<TabType>('reservations');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -723,7 +725,7 @@ export default function AdminDashboardPage() {
                         <span className="text-sm font-medium text-charcoal/70">
                             {session?.user?.email || '로딩 중...'}
                         </span>
-                        <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className="text-sm font-bold text-coral hover:underline underline-offset-4">
+                        <button onClick={async () => { await fetch('/api/auth/logout', { method: 'POST' }); router.push('/admin/login'); }} className="text-sm font-bold text-coral hover:underline underline-offset-4">
                             로그아웃
                         </button>
                     </div>

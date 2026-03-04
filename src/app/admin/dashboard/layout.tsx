@@ -1,12 +1,18 @@
 'use client';
 
-import { useSession, signOut } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 
+interface SessionUser {
+    id: string;
+    email: string;
+    needsPasswordChange: boolean;
+}
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-    const { data: session, status } = useSession();
+    const [session, setSession] = useState<{ user: SessionUser } | null>(null);
+    const [status, setStatus] = useState<'loading' | 'authenticated' | 'unauthenticated'>('loading');
     const router = useRouter();
     const pathname = usePathname();
 
@@ -17,13 +23,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const [error, setError] = useState('');
 
     useEffect(() => {
-        console.log('Dashboard Session Status:', status, session); // 디버깅용 로그: 브라우저 콘솔(F12)에서 확인 가능
-        if (status === 'unauthenticated') {
-            router.push('/admin/login');
-        } else if (status === 'authenticated' && session?.user && (session.user as any).needsPasswordChange) {
-            setIsPasswordModalOpen(true);
-        }
-    }, [status, session, router]);
+        fetch('/api/auth/session')
+            .then(r => r.json())
+            .then(data => {
+                if (data?.user) {
+                    setSession(data);
+                    setStatus('authenticated');
+                    if (data.user.needsPasswordChange) {
+                        setIsPasswordModalOpen(true);
+                    }
+                } else {
+                    setStatus('unauthenticated');
+                    router.push('/admin/login');
+                }
+            })
+            .catch(() => {
+                setStatus('unauthenticated');
+                router.push('/admin/login');
+            });
+    }, [router]);
 
     const handlePasswordChange = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,7 +69,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             }
 
             // 강제 로그아웃 시켜서 새 비밀번호로 다시 로그인 유도
-            await signOut({ callbackUrl: '/admin/login' });
+            await fetch('/api/auth/logout', { method: 'POST' });
+            router.push('/admin/login');
         } catch (err) {
             setError('오류가 발생했습니다.');
             setIsLoading(false);
@@ -69,7 +88,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 {/* Mobile Header */}
                 <header className="md:hidden bg-white border-b border-mid-gray/10 p-4 flex justify-between items-center">
                     <h2 className="font-bold text-charcoal">관리자 대시보드</h2>
-                    <button onClick={() => signOut({ callbackUrl: '/admin/login' })} className="text-sm text-coral">
+                    <button onClick={async () => { await fetch('/api/auth/logout', { method: 'POST' }); router.push('/admin/login'); }} className="text-sm text-coral">
                         로그아웃
                     </button>
                 </header>
@@ -85,7 +104,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <div className="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl">
                         <h3 className="text-2xl font-bold text-charcoal mb-2">비밀번호 설정</h3>
                         <p className="text-charcoal/60 text-sm mb-6">
-                            {(session?.user as any)?.needsPasswordChange
+                            {session?.user?.needsPasswordChange
                                 ? "초기 비밀번호를 사용 중입니다. 안전한 사용을 위해 새 비밀번호로 변경해 주세요."
                                 : "새로운 비밀번호를 입력해 주세요."}
                         </p>
@@ -119,7 +138,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                             {error && <p className="text-coral text-sm font-medium">{error}</p>}
 
                             <div className="flex gap-3 pt-4">
-                                {!(session?.user as any)?.needsPasswordChange && (
+                                {!session?.user?.needsPasswordChange && (
                                     <Button type="button" variant="secondary" onClick={() => setIsPasswordModalOpen(false)} className="flex-1">
                                         취소
                                     </Button>

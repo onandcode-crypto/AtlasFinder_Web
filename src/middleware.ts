@@ -1,11 +1,21 @@
-import { auth } from "@/lib/auth";
+import { NextRequest, NextResponse } from 'next/server';
+import { verifyJWT } from '@/lib/jwt';
 
-export default auth((req) => {
-    // req.auth holds the session data
-    // Auth.js v5 handles redirect to pages.signIn automatically when returning Response.redirect,
-    // or through the authorized callback in auth.ts
-});
+export async function middleware(req: NextRequest) {
+    const token = req.cookies.get('admin-token')?.value;
+
+    if (!token) {
+        return NextResponse.redirect(new URL('/admin/login', req.url));
+    }
+
+    const payload = await verifyJWT(token);
+    if (!payload) {
+        return NextResponse.redirect(new URL('/admin/login', req.url));
+    }
+
+    return NextResponse.next();
+}
 
 export const config = {
-    matcher: ["/admin/dashboard/:path*"],
+    matcher: ['/admin/dashboard/:path*'],
 };

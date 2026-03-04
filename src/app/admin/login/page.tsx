@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
+
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
@@ -39,19 +39,21 @@ export default function LoginPage() {
         const finalEmail = `${emailId}@${finalDomain}`;
 
         try {
-            const res = await signIn('credentials', {
-                redirect: false,
-                email: finalEmail,
-                password,
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: finalEmail, password }),
             });
 
-            if (res?.error) {
-                setError(res?.status === 401 ? '이메일 또는 비밀번호가 일치하지 않습니다.' : res.error);
+            const data = await res.json();
+
+            if (!res.ok) {
+                setError(data.error || '이메일 또는 비밀번호가 일치하지 않습니다.');
             } else {
                 router.push('/admin/dashboard');
                 router.refresh();
             }
-        } catch (err) {
+        } catch {
             setError('로그인 중 오류가 발생했습니다.');
         } finally {
             setIsLoading(false);

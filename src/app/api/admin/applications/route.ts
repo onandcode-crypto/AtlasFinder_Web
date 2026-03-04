@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import { createServerSideClient } from '@/lib/supabase';
-import { auth } from '@/lib/auth';
+import { getAdminSession } from '@/lib/auth';
 
 export const runtime = 'edge';
 
-export async function GET() {
+export async function GET(req: Request) {
     try {
-        const session = await auth();
-        if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        const session = await getAdminSession(req);
+        if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const supabase = await createServerSideClient();
         const { data, error } = await supabase
@@ -24,8 +24,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        const session = await auth();
-        if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        const session = await getAdminSession(req);
+        if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const { id, name, version, price_type, description, features, os, image_url, link_url, status } = await req.json();
         const supabase = await createServerSideClient();
@@ -56,8 +56,8 @@ export async function POST(req: Request) {
 
 export async function DELETE(req: Request) {
     try {
-        const session = await auth();
-        if (!session?.user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        const session = await getAdminSession(req);
+        if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const { searchParams } = new URL(req.url);
         const id = searchParams.get('id');

@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 import { hashPassword } from '@/lib/crypto';
 import { createServerSideClient } from '@/lib/supabase';
-import { auth } from '@/lib/auth';
+import { getAdminSession } from '@/lib/auth';
 
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
     try {
-        const session = await auth();
-        if (!session?.user?.email) {
+        const session = await getAdminSession(req);
+        if (!session) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
         }
 
-        const email = session.user.email;
+        const email = session;
         const password_hash = await hashPassword(newPassword);
 
         const supabase = await createServerSideClient();

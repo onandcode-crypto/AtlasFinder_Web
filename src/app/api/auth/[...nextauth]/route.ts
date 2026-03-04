@@ -1,3 +1,11 @@
-import { handlers } from "@/lib/auth";
+import { NextResponse } from 'next/server';
 
-export const { GET, POST } = handlers;
+export const runtime = 'edge';
+
+export async function GET() {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+}
+
+export async function POST() {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+}
