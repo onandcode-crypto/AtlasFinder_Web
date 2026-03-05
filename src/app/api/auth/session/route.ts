@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyJWT, getTokenFromCookie } from '@/lib/jwt';
 
-export const runtime = 'edge';
-
 export async function GET(req: Request) {
     const token = getTokenFromCookie(req);
     if (!token) return NextResponse.json(null);

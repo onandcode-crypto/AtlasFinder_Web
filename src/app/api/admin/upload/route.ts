@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import { createServerSideClient } from '@/lib/supabase';
 import { getAdminSession } from '@/lib/auth';
 
-export const runtime = 'edge';
-
 export async function POST(req: Request) {
     try {
         const session = await getAdminSession(req);

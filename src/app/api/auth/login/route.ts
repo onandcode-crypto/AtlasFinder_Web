@@ -3,8 +3,6 @@ import { comparePassword } from '@/lib/crypto';
 import { createServiceClient } from '@/lib/supabase';
 import { signJWT } from '@/lib/jwt';
 
-export const runtime = 'edge';
-
 export async function POST(req: Request) {
     try {
         const { email, password } = await req.json();
