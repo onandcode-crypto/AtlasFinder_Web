@@ -10,13 +10,13 @@ export default function Home() {
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-deep-ivory rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
         <div className="max-w-4xl mx-auto px-6 lg:px-8 w-full z-10 flex flex-col items-center justify-center text-center pt-12 lg:pt-0">
-          <h1 className="text-6xl sm:text-7xl lg:text-[80px] font-extrabold leading-[1.1] text-charcoal tracking-tight mb-8">
+          <h1 className="text-4xl sm:text-7xl lg:text-[80px] font-extrabold leading-[1.1] text-charcoal tracking-tight mb-8">
             ATLASFINDER
           </h1>
-          <p className="text-2xl sm:text-3xl font-medium text-charcoal mb-4">
+          <p className="text-lg sm:text-3xl font-medium text-charcoal mb-4">
             나다운 내일을 찾아가는 항해 지도
           </p>
-          <p className="text-base sm:text-lg text-charcoal/80 mb-10 leading-relaxed max-w-xl font-medium">
+          <p className="text-sm sm:text-lg text-charcoal/80 mb-10 leading-relaxed max-w-xl font-medium">
             흩어진 생각과 가능성을 모아 우리 삶의 방향을 하나씩 짚어봅니다.<br />
             어디로 가야 할지 막막할 때, 우리의 항해를 돕는 공간입니다.
           </p>
