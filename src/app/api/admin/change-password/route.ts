@@ -15,7 +15,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
         }
 
-        const email = session;
+        const email = session.email;
         const password_hash = await hashPassword(newPassword);
 
         const supabase = await createServerSideClient();
